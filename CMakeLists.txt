@@ -1,9 +1,6 @@
 cmake_minimum_required(VERSION 3.25)
-project(Wet2DS_2024 C)
+project(Wet2-DS2024)
 
-set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
-include_directories(.)
-
-add_executable(Wet2DS_2024
-        hashTable.h Team.cpp Team.h Contestant.cpp Contestant.h main24a2.cpp Node.h AVL_tree.h olympics24a2.cpp olympics24a2.h wet2util.h)
+add_executable(Wet2-DS2024 AVL_tree.h Contestant.cpp hashTable.h main24a2.cpp olympics24a2.cpp Team.cpp RankNode.h RankTree.h StrCond.cpp)

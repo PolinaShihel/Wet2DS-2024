@@ -11,6 +11,8 @@
 #define null_height -1
 
 //AVL tree exception classes //NEED TO RECHECK
+class KeyExists : public std::exception {
+};
 class KeyNotFound : public std::exception {
 };
 
@@ -61,14 +63,6 @@ public:
 
     Node *roll_RR();
 
-    //Others
-//    Node *findThirdBiggest(Node *root);
-//
-//    Node *findThirdSmallest(Node *root);
-//
-//    Node *findSecondBiggest(Node *root);
-//
-//    Node *findSecondSmallest(Node *root);
     Node *findBiggestParent(Node *root);
 
     Node *findBiggest();
@@ -219,55 +213,14 @@ Node<T, Cond> *Node<T, Cond>::insertNode(const Cond &newKey, const T &newData) {
     if (this == nullptr) {
         return new Node<T, Cond>(newKey, newData);
     }
-    if (this->key <= newKey) {
+    if (this->key < newKey) {
         this->right = this->right->insertNode(newKey, newData);
     } else if (this->key > newKey) {
         this->left = this->left->insertNode(newKey, newData);
-    }
+    }else
+        throw KeyExists();
     this->calcHeight();
     return this->rotate();
-}
-
-//template<class T, class Cond>
-//Node<T, Cond> *Node<T, Cond>::findThirdBiggest(Node *node) {
-//    if(node->right->right == nullptr){
-//        if(node->right->left != nullptr)
-//            return node;
-//        if(node->left != nullptr && node->left->right != nullptr)
-//            return node->left->right;
-//        return node->left;
-//    }
-//    if (node->right->right->right == nullptr && node->right->left == nullptr){
-//        return node;
-//    }
-//    return findThirdBiggest(node->right);
-//}
-
-//template<class T, class Cond>
-//Node<T, Cond> *Node<T, Cond>::findThirdSmallest(Node *node) {
-//    if(node->left->left == nullptr){
-//        if(node->left->right != nullptr)
-//            return node;
-//        if(node->right != nullptr && node->right->left != nullptr)
-//            return node->right->left;
-//        return node->right;
-//    }
-//    if (node->left->left->left == nullptr && node->left->right == nullptr){
-//        return node;
-//    }
-//    return findThirdSmallest(node->left);
-//}
-
-template<class T, class Cond>
-Node<T, Cond> *Node<T, Cond>::findSecondBiggest(Node *node) {
-    if ((node->right == nullptr) && (node->left != nullptr))
-        return node->left;
-    if (node->right->right == nullptr) {
-        if (node->right->left != nullptr)
-            return node->right->left;
-        return node;
-    }
-    return findSecondBiggest(node->right);
 }
 
 template <class T, class Cond>
@@ -276,20 +229,6 @@ Node<T,Cond>* Node<T,Cond>::findBiggestParent(Node *root)
     if(root -> right ->right == nullptr)
         return root;
     return findBiggestParent(root->right);
-}
-
-template<class T, class Cond>
-Node<T, Cond> *Node<T, Cond>::findSecondSmallest(Node *node) {
-    if ((node->left == nullptr) && (node->right != nullptr))
-        return node->right;
-    if (node->left->left == nullptr)
-    {
-        if(node->left->right != nullptr)
-            return node->left->right;
-        return node;
-
-    }
-    return findSecondSmallest(node->left);
 }
 
 template<class T, class Cond>
